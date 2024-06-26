@@ -20,3 +20,8 @@ springdoc:
     path: /aulamatriz-doc
   show-actuator: false
   packages-to-scan: com.ms.user.controller
+
+control:
+  exception:
+    business: Business Exception
+    system: System Exception

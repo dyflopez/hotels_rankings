@@ -6,6 +6,7 @@ import com.ms.user.model.UserEntity;
 import com.ms.user.repository.UserRepository;
 import com.ms.user.service.IUserService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements IUserService {
@@ -22,7 +24,17 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ResponseEntity<UserEntity> save(UserDTO userDTO) {
 
+        log.info(
+                " ingresa a  a save() {}",userDTO
+        );
+
+        log.warn(
+                " buscar usuario por documento  "
+        );
         var currentUser = this.userRepository.findByDocument(userDTO.getDocument());
+        log.info(
+                " Validar si existe el usuario  "
+        );
         if(currentUser.isPresent()){
             throw new MyHandleException("user already exist in database");
         }

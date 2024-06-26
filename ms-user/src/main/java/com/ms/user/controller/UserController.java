@@ -1,15 +1,18 @@
 package com.ms.user.controller;
 
+import com.ms.user.configs.ExceptionConfigs;
 import com.ms.user.controller.doc.UserDoc;
 import com.ms.user.dto.UserDTO;
 import com.ms.user.model.UserEntity;
 import com.ms.user.service.IUserService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @AllArgsConstructor
 @RestController
 public class UserController implements UserDoc {
@@ -19,6 +22,9 @@ public class UserController implements UserDoc {
     @Override
     public ResponseEntity<UserEntity> create(UserDTO userDTO) {
 
+        log.info(
+                 " create()  \n {}",userDTO
+        );
         return this.iUserService.save(userDTO);
     }
     @Override
