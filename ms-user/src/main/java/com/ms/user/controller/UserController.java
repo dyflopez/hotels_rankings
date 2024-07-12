@@ -66,4 +66,9 @@ public class UserController implements UserDoc {
     public ResponseEntity<UserEntity> updateByDocument(String document, UserDTO userDTO) {
         return this.iUserService.updateUserById(document,userDTO);
     }
+
+    @Override
+    public ResponseEntity<?> getReviewById(String id) {
+        return  this.iUserService.getReviewByUserId(id);
+    }
 }

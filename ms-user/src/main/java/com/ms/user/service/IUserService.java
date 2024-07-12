@@ -16,4 +16,6 @@ public interface IUserService {
     ResponseEntity<List<UserEntity>> getAll();
 
     ResponseEntity<UserEntity> getById(String id);
+
+    ResponseEntity<?> getReviewByUserId(String id);
 }

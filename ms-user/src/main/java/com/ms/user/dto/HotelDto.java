@@ -1,4 +1,4 @@
-package com.ms.ranking.dto;
+package com.ms.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

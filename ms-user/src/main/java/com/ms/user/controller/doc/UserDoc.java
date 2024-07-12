@@ -129,4 +129,18 @@ public interface UserDoc {
     )
     @PutMapping("/document/{document}")
     ResponseEntity<UserEntity> updateByDocument(@PathVariable String document,@Valid @RequestBody UserDTO userDTO);
+
+    @Operation(summary = "find by id user with ranking" ,description = "")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200" , description = "user found",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
+                    @ApiResponse(responseCode = "500" , description = "internal server error",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
+                    @ApiResponse(responseCode = "404" , description = "endpoint not found",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
+            }
+    )
+    @GetMapping("/{id}/review")
+    ResponseEntity<?> getReviewById(@PathVariable("id") String id);
 }
