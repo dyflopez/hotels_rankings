@@ -69,6 +69,11 @@
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 			<version>4.1.1</version>
 		</dependency>
+		<!--ACTIVE MQ-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-activemq</artifactId>
+		</dependency>
 
 	</dependencies>
 
