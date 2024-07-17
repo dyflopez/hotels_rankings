@@ -1,5 +1,6 @@
 package com.ms.user.service.impl;
 
+import com.ms.user.configs.IHotelServiceFeign;
 import com.ms.user.dto.HotelDto;
 import com.ms.user.dto.RankingDto;
 import com.ms.user.dto.UserDTO;
@@ -31,6 +32,8 @@ public class UserServiceImpl implements IUserService {
     private final RestTemplate restTemplate;
 
     private final UserRepository userRepository;
+
+    private final IHotelServiceFeign iHotelServiceFeign;
 
     @Override
     public ResponseEntity<UserEntity> save(UserDTO userDTO) {
@@ -141,10 +144,13 @@ public class UserServiceImpl implements IUserService {
            var listRanking = Arrays.stream(rankings).toList();
            var rankinFull = listRanking.stream()
                    .peek(ran -> {
-                       var hotelResponse = this.restTemplate.getForObject(
+                       /*var hotelResponse = this.restTemplate.getForObject(
                                "http://HOTEL-MS/api/v1/hotel/" + ran.getHotelId(),
                                HotelDto.class
-                       );
+                       );*/
+
+                       var uuid = UUID.fromString(ran.getHotelId());
+                       var hotelResponse = this.iHotelServiceFeign.getHotelById(uuid);
                        ran.setHotel(hotelResponse);
                    })
                    .collect(Collectors.toList());
