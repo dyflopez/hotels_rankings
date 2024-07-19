@@ -5,8 +5,10 @@ import com.ms.user.dto.HotelDto;
 import com.ms.user.dto.RankingDto;
 import com.ms.user.dto.UserDTO;
 import com.ms.user.dto.UserRankingDto;
+import com.ms.user.dto.jms.JmsEmailDto;
 import com.ms.user.exception.MyHandleException;
 import com.ms.user.model.UserEntity;
+import com.ms.user.producer.IMsEmailProducer;
 import com.ms.user.repository.UserRepository;
 import com.ms.user.service.IUserService;
 import lombok.AllArgsConstructor;
@@ -34,6 +36,9 @@ public class UserServiceImpl implements IUserService {
     private final UserRepository userRepository;
 
     private final IHotelServiceFeign iHotelServiceFeign;
+
+
+    private final IMsEmailProducer iMsEmailProducer;
 
     @Override
     public ResponseEntity<UserEntity> save(UserDTO userDTO) {
@@ -63,6 +68,15 @@ public class UserServiceImpl implements IUserService {
                 .build();
 
         var newUser =  this.userRepository.save(use);
+
+        JmsEmailDto jmsEmailDto = new JmsEmailDto();
+
+        jmsEmailDto.setRecipient(newUser.getEmail());
+        jmsEmailDto.setSubject("welcome to company");
+        jmsEmailDto.setMsgBody("nos alegra que te registres en en esta compañia");
+
+
+        this.iMsEmailProducer.generateTransactionEmail(jmsEmailDto);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
